@@ -2,14 +2,9 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 
-console.log('Démarrage du processus de rendu...');
-console.log('Création de l\'application Vue...');
-
+// On crée l'application Vue
 const app = createApp(App);
-console.log('Application Vue créée, ajout du routeur...');
-
+// On ajoute le routeur pour la navigation
 app.use(router);
-console.log('Routeur ajouté, montage de l\'application...');
-
+// On monte l'app dans l'élément #app du HTML
 app.mount('#app');
-console.log('Application Vue montée avec succès !');

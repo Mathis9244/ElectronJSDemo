@@ -4,82 +4,79 @@ import started from 'electron-squirrel-startup';
 import log from 'electron-log';
 import os from 'os';
 
-// Configuration des logs
+// Configuration des logs pour déboguer l'app
 const logPath = path.join(os.homedir(), 'AppData', 'Roaming', 'app_demo', 'logs');
 log.transports.file.resolvePathFn = () => path.join(logPath, 'main.log');
-log.transports.file.level = 'info';
-log.transports.console.level = 'debug';
+log.transports.file.level = 'info'; // Niveau des logs dans le fichier
+log.transports.console.level = 'debug'; // Niveau des logs dans la console
 
-// Configuration de l'encodage UTF-8 pour les logs
+// Format des logs avec date et heure
 log.transports.file.format = '[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}] {text}';
 
-// Créer le dossier de logs s'il n'existe pas
+// On crée le dossier de logs s'il n'existe pas
 import fs from 'fs';
 if (!fs.existsSync(logPath)) {
     fs.mkdirSync(logPath, { recursive: true });
     log.info('Log directory created:', logPath);
 }
 
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
+// Gestion des raccourcis Windows lors de l'installation/désinstallation
 if (started) {
   log.info('Application démarrée par Squirrel, fermeture...');
-  app.quit();
+  app.quit(); // On ferme l'app si elle a été lancée par Squirrel
 }
 
+// Fonction pour créer la fenêtre principale de l'app
 const createWindow = () => {
   log.info('Création de la fenêtre principale...');
-  // Create the browser window.
+  // On crée la fenêtre avec ses paramètres
   const mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 900,
+    width: 1200, // Largeur de la fenêtre
+    height: 900, // Hauteur de la fenêtre
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, 'preload.js'), // Script de préchargement
     },
   });
 
-  // and load the index.html of the app.
+  // On charge l'interface selon l'environnement
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+    // En développement, on charge depuis le serveur Vite
     log.info('Chargement de l\'URL de développement:', MAIN_WINDOW_VITE_DEV_SERVER_URL);
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   } else {
+    // En production, on charge le fichier HTML compilé
     const filePath = path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`);
     log.info('Chargement du fichier de production:', filePath);
     mainWindow.loadFile(filePath);
   }
 
-  // Open the DevTools.
+  // On ouvre les DevTools pour déboguer
   log.info('Ouverture des DevTools...');
   mainWindow.webContents.openDevTools();
 };
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+// Cette fonction s'exécute quand Electron est prêt à créer des fenêtres
 app.whenReady().then(() => {
   log.info('Application Electron prête, création de la fenêtre...');
-  createWindow();
+  createWindow(); // On crée la fenêtre principale
 
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
+  // Sur macOS, on recrée une fenêtre si l'utilisateur clique sur l'icône du dock
   app.on('activate', () => {
     log.info('Application activée, vérification des fenêtres...');
     if (BrowserWindow.getAllWindows().length === 0) {
       log.info('Aucune fenêtre trouvée, création d\'une nouvelle fenêtre...');
-      createWindow();
+      createWindow(); // On recrée une fenêtre si il n'y en a pas
     }
   });
 });
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
+// On ferme l'app quand toutes les fenêtres sont fermées (sauf sur macOS)
 app.on('window-all-closed', () => {
   log.info('Toutes les fenêtres fermées, plateforme:', process.platform);
-  if (process.platform !== 'darwin') {
+  if (process.platform !== 'darwin') { // Si c'est pas macOS
     log.info('Fermeture de l\'application...');
-    app.quit();
+    app.quit(); // On ferme l'app
   }
 });
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
+// Ici on peut ajouter d'autres codes spécifiques au processus principal
