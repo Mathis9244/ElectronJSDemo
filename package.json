@@ -8,7 +8,12 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "echo \"No linter configured\" && exit 0",
+    "build": "npm run make",
+    "build:api": "cd api_complete && npm ci && npm run build --if-present",
+    "dev": "npm start",
+    "prebuild": "npm ci"
   },
   "author": "Jane Doe",
   "license": "MIT",

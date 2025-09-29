@@ -1,0 +1,56 @@
+# Configuration des environnements GitHub
+
+## Environnements configurés
+
+### 1. Development
+- **Branche** : `develop`
+- **Déploiement** : Automatique sur push
+- **URL** : `https://dev.electronapp.com`
+
+### 2. Staging
+- **Branche** : `staging`
+- **Déploiement** : Automatique sur push
+- **URL** : `https://staging.electronapp.com`
+
+### 3. Production
+- **Branche** : `master`
+- **Déploiement** : Manuel ou sur tag
+- **URL** : `https://electronapp.com`
+
+## Variables d'environnement
+
+### Development
+```yaml
+NODE_ENV: development
+API_URL: http://localhost:3000
+DEBUG: true
+```
+
+### Staging
+```yaml
+NODE_ENV: staging
+API_URL: https://api-staging.electronapp.com
+DEBUG: false
+```
+
+### Production
+```yaml
+NODE_ENV: production
+API_URL: https://api.electronapp.com
+DEBUG: false
+```
+
+## Protection des branches
+
+### Master
+- ✅ Require pull request reviews
+- ✅ Require status checks to pass
+- ✅ Require branches to be up to date
+- ✅ Restrict pushes to matching branches
+
+### Staging
+- ✅ Require pull request reviews
+- ✅ Require status checks to pass
+
+### Develop
+- ✅ Require status checks to pass
