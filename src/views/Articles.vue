@@ -28,17 +28,17 @@
     </div>
 
     <!-- Grille des articles -->
-    <div v-else-if="articles.length > 0" class="uk-grid-small uk-child-width-1-2@s uk-child-width-1-3@m" uk-grid>
+    <div v-else-if="articles.length > 0" class="uk-grid-small uk-child-width-1-1@s uk-child-width-1-2@m uk-child-width-1-3@l" uk-grid>
       <div v-for="article in articles" :key="article.id" class="uk-margin-bottom">
         <!-- Carte d'un article -->
-        <div class="uk-card uk-card-default uk-card-hover">
+        <div class="uk-card uk-card-default uk-card-hover uk-width-1-1">
           <!-- Image de l'article -->
           <div class="uk-card-media-top">
             <img 
               :key="`${article.id}-${imageRefreshKey}`"
               :src="article.imgPath || 'https://picsum.photos/300/200?random=' + article.id" 
               :alt="article.title" 
-              class="article-image" 
+              class="article-image uk-width-1-1" 
               crossorigin="anonymous"
               @error="console.log('Erreur image:', article.imgPath, $event)"
               @load="console.log('Image chargée:', article.imgPath)"
@@ -47,9 +47,7 @@
           <!-- En-tête de la carte avec titre et date -->
           <div class="uk-card-header">
             <h3 class="uk-card-title uk-margin-remove-bottom">{{ article.title }}</h3>
-            <p class="uk-text-meta uk-margin-remove-top">
-              Créé le {{ article.createdAt ? formatDate(article.createdAt) : 'Date inconnue' }}
-            </p>
+          
           </div>
           <!-- Corps de la carte avec contenu et infos -->
           <div class="uk-card-body">
@@ -466,15 +464,70 @@ onMounted(() => {
   cursor: not-allowed;
 }
 
-/* Styles pour les images des articles */
+/* Styles pour les images des articles - Responsive */
 .article-image {
   width: 100%;
   height: 200px;
   object-fit: cover;
   border-radius: 4px 4px 0 0;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.article-image:hover {
+  transform: scale(1.05);
 }
 
 .uk-card-media-top {
   overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+/* Responsive breakpoints pour les images */
+@media (max-width: 640px) {
+  .article-image {
+    height: 150px;
+  }
+  
+  .uk-card {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 960px) {
+  .article-image {
+    height: 180px;
+  }
+}
+
+@media (min-width: 961px) {
+  .article-image {
+    height: 200px;
+  }
+}
+
+/* Grille responsive pour les articles */
+.uk-grid-small {
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .uk-grid-small {
+    gap: 0.5rem;
+  }
+}
+
+/* Assurer que les cartes sont responsive */
+.uk-card {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Responsive pour les cartes */
+@media (max-width: 640px) {
+  .uk-card {
+    margin: 0 0.5rem 1rem 0.5rem;
+  }
 }
 </style>

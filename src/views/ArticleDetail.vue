@@ -47,7 +47,7 @@
       </div>
 
       <!-- Contenu de l'article -->
-      <div class="uk-card uk-card-default">
+      <div class="uk-card uk-card-default article-detail-container">
         <!-- Image de l'article -->
         <div v-if="article.imgPath" class="uk-card-media-top">
           <img :src="article.imgPath" :alt="article.title" class="article-detail-image" />
@@ -61,7 +61,7 @@
                   <span uk-icon="user"></span> {{ article.author }}
                 </span>
                 <span class="uk-margin-right">
-                  <span uk-icon="calendar"></span> {{ formatDate(article.createdAt) }}
+                
                 </span>
                 <span v-if="article.category" class="uk-label uk-label-success">
                   {{ article.category }}
@@ -77,9 +77,6 @@
         </div>
         <div class="uk-card-footer">
           <div class="uk-text-meta">
-            <span v-if="article.updatedAt && article.updatedAt !== article.createdAt">
-              Dernière modification : {{ formatDate(article.updatedAt) }}
-            </span>
           </div>
         </div>
       </div>
@@ -344,17 +341,6 @@ const closeDeleteModal = () => {
   UIkit.modal('#delete-modal').hide();
 };
 
-// Formater une date
-const formatDate = (dateString) => {
-  return new Date(dateString).toLocaleDateString('fr-FR', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
-};
-
 onMounted(() => {
   // Vérifier l'authentification
   if (!authService.isAuthenticated()) {
@@ -386,15 +372,58 @@ onMounted(() => {
   font-size: 0.875rem;
 }
 
-/* Styles pour l'image de détail de l'article */
+/* Styles pour l'image de détail de l'article - Responsive */
 .article-detail-image {
   width: 100%;
   height: 400px;
   object-fit: cover;
   border-radius: 4px 4px 0 0;
+  transition: transform 0.3s ease;
+}
+
+.article-detail-image:hover {
+  transform: scale(1.02);
 }
 
 .uk-card-media-top {
   overflow: hidden;
+  position: relative;
+}
+
+/* Responsive breakpoints pour l'image de détail */
+@media (max-width: 640px) {
+  .article-detail-image {
+    height: 250px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 960px) {
+  .article-detail-image {
+    height: 300px;
+  }
+}
+
+@media (min-width: 961px) and (max-width: 1200px) {
+  .article-detail-image {
+    height: 350px;
+  }
+}
+
+@media (min-width: 1201px) {
+  .article-detail-image {
+    height: 400px;
+  }
+}
+
+/* Container responsive pour la page de détail */
+.article-detail-container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 1200px) {
+  .article-detail-container {
+    max-width: 1000px;
+  }
 }
 </style>
