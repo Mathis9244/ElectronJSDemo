@@ -41,7 +41,6 @@ const createWindow = () => {
     },
   });
 
-  //mainWindow.menu.file.enabled = false;
 
   // On charge l'interface selon l'environnement
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
