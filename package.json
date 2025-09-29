@@ -31,5 +31,9 @@
     "electron-squirrel-startup": "^1.0.1",
     "vue": "^3.5.22",
     "vue-router": "^4.5.1"
+  },
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/Mathis9244/ElectronJSDemo"
   }
 }
