@@ -88,12 +88,17 @@ export const articleService = {
 // Fonction pour récupérer tous les articles
 async getArticles() {
   try {
+    console.log('🔄 Demande des articles à l\'API...');
     const response = await api.get('/articles'); // On demande la liste des articles
+    console.log('📡 Réponse de l\'API:', response.data);
     if (response.data.code === '200') {
+      console.log('Articles récupérés avec succès:', response.data.data);
       return { success: true, data: response.data.data }; // Ça a marché, on renvoie les articles
     }
+    console.log('Erreur API:', response.data.message);
     return { success: false, message: response.data.message }; // Ça a foiré
   } catch (error) {
+    console.log('Erreur lors de la récupération des articles:', error);
     return {
       success: false,
       message: error.response?.data?.message || 'Erreur lors de la récupération des articles'
@@ -120,13 +125,18 @@ async getArticles() {
   // Fonction pour créer ou modifier un article (c'est la même route côté API)
   async saveArticle(articleData) {
     try {
+      console.log('📤 Envoi des données à l\'API:', articleData);
       const response = await api.post('/articles/save', articleData); // On envoie les données de l'article
+      console.log('📥 Réponse de l\'API:', response.data);
       
       if (response.data.code === '200') {
+        console.log('Article sauvegardé avec succès:', response.data.data);
         return { success: true, data: response.data.data }; // Ça a marché !
       }
+      console.log('Erreur API:', response.data.message);
       return { success: false, message: response.data.message };
     } catch (error) {
+      console.log('Erreur lors de la sauvegarde:', error);
       return { 
         success: false, 
         message: error.response?.data?.message || 'Erreur lors de la sauvegarde de l\'article' 
