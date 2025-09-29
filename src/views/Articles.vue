@@ -40,8 +40,6 @@
               :alt="article.title" 
               class="article-image" 
               crossorigin="anonymous"
-              @error="console.log('Erreur image:', article.imgPath, $event)"
-              @load="console.log('Image chargée:', article.imgPath)"
             />
           </div>
           <!-- En-tête de la carte avec titre et date -->
@@ -280,7 +278,6 @@ const loadArticles = async () => {
   try {
     const result = await articleService.getArticles(); // On demande les articles à l'API
     if (result.success) {
-      console.log('Articles chargés:', result.data); // Debug pour voir les données
       articles.value = result.data; // On met à jour la liste
     } else {
       errorMessage.value = result.message; // On affiche l'erreur
@@ -309,12 +306,7 @@ const saveArticle = async () => {
       id: editingArticle.value?.id // Si on a un ID, c'est une modification
     };
 
-    console.log('💾 Sauvegarde de l\'article:', articleData);
-    console.log('🔄 Mode:', editingArticle.value ? 'Modification' : 'Création');
-
     const result = await articleService.saveArticle(articleData); // On envoie à l'API
-    
-    console.log('📡 Résultat de la sauvegarde:', result);
     
     if (result.success) {
       closeModal(); // On ferme le modal
@@ -323,10 +315,8 @@ const saveArticle = async () => {
       
       // Si c'est une modification, on force le rechargement des images
       if (editingArticle.value) {
-        console.log('🔄 Modification détectée, rechargement des images...');
         imageRefreshKey.value++; // Force le rechargement des images
         setTimeout(() => {
-          console.log('🔄 Rechargement forcé après modification...');
           loadArticles();
           imageRefreshKey.value++; // Force encore le rechargement
         }, 1000);
@@ -357,7 +347,6 @@ const createNewArticle = () => {
 
 // Fonction pour modifier un article existant
 const editArticle = (article) => {
-  console.log('🔧 Modification de l\'article:', article);
   editingArticle.value = article; // On stocke l'article à modifier
   // On pré-remplit le formulaire avec les données de l'article
   articleForm.title = article.title;
@@ -365,7 +354,6 @@ const editArticle = (article) => {
   articleForm.author = article.author || '';
   articleForm.category = article.category || '';
   articleForm.imgPath = article.imgPath || ''; // URL de l'image
-  console.log('📝 Formulaire pré-rempli:', articleForm);
   showCreateModal.value = true; // On indique que le modal doit s'ouvrir
   setTimeout(() => {
     UIkit.modal('#article-modal').show(); // On ouvre le modal

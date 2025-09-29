@@ -30,9 +30,11 @@ Thumbs.db
 logs/
 *.log
 
-# API logs (si l'API est dans le même repo)
-api/logs/
-api/*.log
+# API (external repository)
+api/
+
+# Build artifacts
+.vite/
 
 # Electron
 *.exe
