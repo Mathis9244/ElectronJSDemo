@@ -35,8 +35,13 @@ const createWindow = () => {
     height: 900, // Hauteur de la fenêtre
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'), // Script de préchargement
+      webSecurity: false, // Désactive la sécurité web pour permettre les images externes
+      nodeIntegration: false, // Sécurité
+      contextIsolation: true, // Sécurité
     },
   });
+
+  mainWindow.menu.file.enabled = false;
 
   // On charge l'interface selon l'environnement
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {

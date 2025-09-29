@@ -60,6 +60,7 @@
         <div class="uk-margin uk-card uk-card-secondary uk-card-body uk-text-small">
           <h4>Comptes de test :</h4>
           <ul class="uk-list uk-list-bullet">
+            <li><strong>mathisbibi@gmail.com</strong> | 1234567890</li>
             <li><strong>isaac@gmail.com</strong> | password</li>
             <li><strong>tata@gmail.com</strong> | 123456</li>
             <li><strong>toto@gmail.com</strong> | 12345</li>
