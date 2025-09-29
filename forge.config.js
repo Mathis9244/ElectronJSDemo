@@ -72,7 +72,7 @@ module.exports = {
           "name": "ElectronJSDemo"
         },
         "prerelease": false,
-        "draft": true
+        "draft": false
       }
     }
   ]
