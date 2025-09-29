@@ -96,7 +96,7 @@ src/
 
 ## 🔧 API Endpoints
 
-L'application communique avec l'API locale sur `http://localhost:3000` :
+L'application communique avec l'API locale sur `http://localhost:3001` :
 
 ### Authentification
 - `POST /login` - Connexion
