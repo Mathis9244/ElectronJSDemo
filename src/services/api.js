@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // On configure axios pour qu'il parle avec notre API locale
 const api = axios.create({
-  baseURL: 'http://localhost:3000', // L'API est sur le port 3000
+  baseURL: 'http://localhost:3001', // L'API est sur le port 3001
   headers: {
     'Content-Type': 'application/json', // On envoie du JSON
   },

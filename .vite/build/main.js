@@ -3053,7 +3053,6 @@ const createWindow = () => {
       // Sécurité
     }
   });
-  mainWindow.menu.file.enabled = false;
   {
     log.info("Chargement de l'URL de développement:", "http://localhost:5173");
     mainWindow.loadURL("http://localhost:5173");
