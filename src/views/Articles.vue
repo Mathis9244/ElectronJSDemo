@@ -28,7 +28,7 @@
     </div>
 
     <!-- Grille des articles -->
-    <div v-else-if="articles.length > 0" class="uk-grid-small uk-child-width-1-2@s uk-child-width-1-3@m" uk-grid>
+    <div v-else-if="articles.length > 0" class="articles-grid">
       <div v-for="article in articles" :key="article.id" class="uk-margin-bottom">
         <!-- Carte d'un article -->
         <div class="uk-card uk-card-default uk-card-hover">
@@ -464,5 +464,33 @@ onMounted(() => {
 
 .uk-card-media-top {
   overflow: hidden;
+}
+
+/* Grille des articles avec CSS Grid */
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+
+/* Responsive pour différentes tailles d'écran */
+@media (max-width: 768px) {
+  .articles-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .articles-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1025px) {
+  .articles-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 </style>
